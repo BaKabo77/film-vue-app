@@ -36,8 +36,7 @@ Une application web développée avec Vue.js et Express.js permettant de gérer 
 
 3. Configuration de la base de données
 - Créer une base de données MySQL
-- Copier le fichier `.env.example` en `.env`
-- Modifier les variables d'environnement dans `.env`
+- importer le fichier .sql pour avoir les données de la base
 
 4. Démarrer l'application
    
