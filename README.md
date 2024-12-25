@@ -1,29 +1,34 @@
-# training vue bootstrap
+# Application de Gestion de Films
 
-This template should help get you started developing with Vue 3 in Vite.
+Une application web développée avec Vue.js et Express.js permettant de gérer une collection de films.
 
-## Recommended IDE Setup
+## 🚀 Fonctionnalités
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- ✨ Affichage de la liste des films
+- 🔍 Recherche de films
+- 📝 Ajout de nouveaux films
+- ✏️ Modification des films existants
+- 🗑️ Suppression de films
+- 🏷️ Filtrage par catégories
 
-## Customize configuration
+## 🛠️ Technologies Utilisées
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+- Frontend :
+  - Vue.js 3 (Composition API)
+  - Bootstrap 5
+  - Vite
 
-## Project Setup
+- Backend :
+  - Node.js
+  - Express.js
+  - MySQL
 
-```sh
-npm install
-```
+## 📋 Prérequis
 
-### Compile and Hot-Reload for Development
+- Node.js (version 14 ou supérieure)
+- MySQL
+- npm ou yarn
 
-```sh
-npm run dev
-```
+## ⚙️ Installation
 
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+1. Cloner le repository
