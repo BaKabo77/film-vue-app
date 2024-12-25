@@ -1,0 +1,50 @@
+# Dépendances
+node_modules/
+/dist
+/dist-ssr
+
+# Fichiers de logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Fichiers d'environnement
+.env
+.env.local
+.env.*.local
+
+# Fichiers d'éditeur
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Fichiers de build et de cache
+.cache/
+.temp/
+.vite/
+*.local
+
+# Tests
+/coverage
+/cypress/videos/
+/cypress/screenshots/
+
+# Base de données
+*.sqlite
+*.db
+
+# Fichiers de configuration locaux
+*.local
