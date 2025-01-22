@@ -32,3 +32,25 @@ Une application web développée avec Vue.js et Express.js permettant de gérer 
 ## ⚙️ Installation
 
 1. Cloner le repository
+2. Installer les dépendances
+
+3. Configuration de la base de données
+- Créer une base de données MySQL
+- importer le fichier .sql pour avoir les données de la base
+
+4. Démarrer l'application
+   
+## Démarrer le Backend (en lançant un terminal)
+cd src/backend
+npm run server
+
+## Lancer le frontend 
+npm run dev
+
+
+## 🤝 Contribution
+
+Les contributions sont les bienvenues ! N'hésitez pas à :
+- Ouvrir une issue
+- Proposer une pull request
+- Suggérer des améliorations
