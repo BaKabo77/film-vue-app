@@ -19,37 +19,78 @@
             </router-link>
             </div>
     </div>
+
+    <!-- Élément sentinel pour l'Intersection Observer -->
+    <div ref="sentinel" class="sentinel my-5"></div>
+
+    <!-- Indicateur de chargement -->
+    <div v-if="isLoading" class="text-center mb-4">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Chargement...</span>
+        </div>
+    </div>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, watch, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
- let films = ref([]) 
+const films = ref([])
+const sentinel = ref(null)
+const isLoading = ref(false)
 
-onMounted(async()=>{
-    try{
+async function getFilms() {
+    if (isLoading.value) return
 
-    const requete = await fetch(`${import.meta.env.VITE_API_URL}/films`)
-    let data = await requete.json();  
+    try {
+        isLoading.value = true
+        const index = films.value.length || 0
+        const requete = await fetch(`${import.meta.env.VITE_API_URL}/films?index=${index}`)
+        const data = await requete.json();  
 
-    data.forEach(element => {
-        let tab = {
-            id:element.FilmID,
-            titre: element.Titre,
-            annee: element.Annee,
-            realisateur: element.NomRealisateur,
-            description:element.Description,
-            img:element.ImageURL
+        data.forEach(element => {
+            let tab = {
+                id:element.FilmID,
+                titre: element.Titre,
+                annee: element.Annee,
+                realisateur: element.NomRealisateur,
+                description:element.Description,
+                img:element.ImageURL
+            }
+
+            films.value.push(tab)
+
+            })
+
+            }catch(ex){
+                console.log(ex.message)
+            } finally {
+                isLoading.value = false
+            }
+} 
+onMounted(()=>{
+    // Premier chargement
+    getFilms()
+
+    // Configuration de l'Intersection Observer
+    const observer = new IntersectionObserver(
+        (entries) => {
+            if (entries[0].isIntersecting && !isLoading.value) {
+                getFilms()
+            }
         }
+    )
 
-        films.value.push(tab)
-    })
-    
-    }catch(ex){
-        console.log(ex.message)
+    // Commence à observer le sentinel
+    if (sentinel.value) {
+        observer.observe(sentinel.value)
     }
 })
 
-
-
 </script>
+
+<style>
+
+.sentinel{
+    height: 10px;
+}
+</style>

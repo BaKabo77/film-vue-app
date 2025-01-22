@@ -1,7 +1,7 @@
 import sql from 'mysql2/promise'
 
 
-const database = await sql.createConnection({
+const database = await sql.createPool({
     host:'localhost',
     user:'root',
     password:'root',
@@ -9,10 +9,10 @@ const database = await sql.createConnection({
 })
 
 
-export const films = async()=>{
+export const films = async(index)=>{
     try{
 
-        const films = await database.execute('SELECT f.FilmID,f.Titre,f.Annee,r.NomRealisateur,f.Description,f.ImageURL,c.NomCategorie FROM Films f JOIN Realisateurs r ON f.RealisateurID = r.RealisateurID JOIN Categories c ON f.CategorieID = c.CategorieID order by f.FilmID')
+        const films = await database.execute('SELECT f.FilmID,f.Titre,f.Annee,r.NomRealisateur,f.Description,f.ImageURL,c.NomCategorie FROM Films f JOIN Realisateurs r ON f.RealisateurID = r.RealisateurID JOIN Categories c ON f.CategorieID = c.CategorieID order by f.FilmID limit ?,5',[index])
         return films[0]  
 
     }catch(err){

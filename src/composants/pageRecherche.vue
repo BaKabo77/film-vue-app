@@ -22,6 +22,16 @@
     </div>
 
 </div>    
+
+<!-- Ajout du sentinel -->
+<div ref="sentinel" class="sentinel my-5"></div>
+
+<!-- Indicateur de chargement -->
+<div v-if="isLoading" class="text-center mb-4">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Chargement...</span>
+  </div>
+</div>
 </template>
 
 <script setup>
@@ -32,31 +42,61 @@ const search = ref('');
 
 const films = ref([]);
 
+const sentinel = ref(null);
+const isLoading = ref(false);
 
+async function getFilms() {
+  if (isLoading.value) return;
 
-onMounted(async()=>{
-    try{
-
-        const requete = await fetch(`${import.meta.env.VITE_API_URL}/films`)
-    let data = await requete.json();  
+  try {
+    isLoading.value = true;
+    const index = films.value.length || 0;
+    const requete = await fetch(`${import.meta.env.VITE_API_URL}/films?index=${index}`);
+    const data = await requete.json();
 
     data.forEach(element => {
-        let tab = {
-            id:element.FilmID,
-            titre: element.Titre,
-            annee: element.Annee,
-            realisateur: element.NomRealisateur,
-            description:element.Description,
-            img:element.ImageURL
-        }
+      let tab = {
+        id: element.FilmID,
+        titre: element.Titre,
+        annee: element.Annee,
+        realisateur: element.NomRealisateur,
+        description: element.Description,
+        img: element.ImageURL
+      };
 
-        films.value.push(tab)
-    })
-    
-    }catch(ex){
-        console.log(ex.message)
+      films.value.push(tab);
+    });
+  } catch (ex) {
+    console.log(ex.message);
+  } finally {
+    isLoading.value = false;
+  }
+}
+
+onMounted(() => {
+  // Premier chargement
+  getFilms();
+
+  // Configuration de l'Intersection Observer
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting && !isLoading.value) {
+        getFilms();
+      }
+    },
+    {
+      rootMargin: '200px',
+      threshold: 0.1
     }
-})
+  );
+
+  // Observer le sentinel
+  if (sentinel.value) {
+    observer.observe(sentinel.value);
+  }
+
+  
+});
 
 const recherche = computed(()=>{
 
@@ -73,6 +113,10 @@ const recherche = computed(()=>{
 
 })
 
-
-
 </script>
+
+<style scoped>
+.sentinel {
+  height: 20px;
+}
+</style>

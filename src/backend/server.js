@@ -22,8 +22,10 @@ app.get('/', (req, res) => {
 
 app.get('/films', async (req, res) => {
 
+  const index = req.query.index
+
   try{
-    const data = await films()
+    const data = await films(index)
     res.json(data)
   }catch(err){
     console.error('Erreur:', err)
